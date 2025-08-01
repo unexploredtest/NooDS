@@ -3,6 +3,11 @@ project(NooDS)
 
 file(GLOB SOURCES "src/*.cpp")
 
+# Windows doesn't have the header unistd.h
+if(WIN32)
+    add_definitions(-DNO_FDOPEN)
+endif()
+
 add_library(${PROJECT_NAME} ${SOURCES})
 
 target_include_directories(${PROJECT_NAME}
