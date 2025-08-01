@@ -46,6 +46,10 @@
 #endif
 
 // Compatibility toggle for systems that don't have fdopen
+#ifdef _WIN32
+#define NO_FDOPEN
+#endif
+
 #ifdef NO_FDOPEN
 #define fdopen(...) (0)
 #define ftruncate(...) (0)
