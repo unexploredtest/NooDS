@@ -5,8 +5,7 @@ file(GLOB SOURCES "src/*.cpp")
 
 # Windows doesn't have the header unistd.h
 if(WIN32)
-    add_definitions(-DNO_FDOPEN)
-    add_definitions(-DWINDOWS)
+    add_definitions(-DWINDOWS -DNO_FDOPEN)
 endif()
 
 add_library(${PROJECT_NAME} ${SOURCES})
