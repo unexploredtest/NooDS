@@ -20,6 +20,13 @@
 #include <sys/stat.h>
 #include "core.h"
 
+// mkdir isn't defined on Windows, so we define it manually
+#ifdef _WIN32
+#include <direct.h>
+#define mkdir _mkdir
+#endif
+
+
 int Settings::directBoot = 1;
 int Settings::romInRam = 0;
 int Settings::fpsLimiter = 1;
