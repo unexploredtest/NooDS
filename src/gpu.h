@@ -54,6 +54,8 @@ public:
     void writeDispCapCnt(uint32_t mask, uint32_t value);
     void writePowCnt1(uint16_t mask, uint16_t value);
 
+    uint8_t getBufferSize();
+
 private:
     Core *core;
 

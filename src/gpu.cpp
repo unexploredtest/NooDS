@@ -647,3 +647,7 @@ void Gpu::writePowCnt1(uint16_t mask, uint16_t value) {
     mask &= 0x820F;
     powCnt1 = (powCnt1 & ~mask) | (value & mask);
 }
+
+uint8_t Gpu::getBufferSize() {
+    return framebuffers.size();
+}
