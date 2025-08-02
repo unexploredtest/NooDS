@@ -1894,6 +1894,16 @@ void Memory::writeGbaHaltCnt(uint8_t value) {
         LOG_CRIT("Unhandled request for stop mode\n");
 }
 
+template uint8_t Memory::readRam<uint8_t>(uint32_t address);
+template uint16_t Memory::readRam<uint16_t>(uint32_t address);
+template uint32_t Memory::readRam<uint32_t>(uint32_t address);
+template uint64_t Memory::readRam<uint64_t>(uint32_t address);
+template int8_t Memory::readRam<int8_t>(uint32_t address);
+template int16_t Memory::readRam<int16_t>(uint32_t address);
+template int32_t Memory::readRam<int32_t>(uint32_t address);
+template int64_t Memory::readRam<int64_t>(uint32_t address);
+template float Memory::readRam<float>(uint32_t address);
+template double Memory::readRam<double>(uint32_t address);
 template <typename T> T Memory::readRam(uint32_t address) {
     uint32_t maxAddress = core->dsiMode ? 0xFFFFFF : 0x3FFFFF;
     if(address > maxAddress) {
@@ -1905,6 +1915,16 @@ template <typename T> T Memory::readRam(uint32_t address) {
     return value;
 }
 
+template void Memory::writeRam<uint8_t>(uint32_t address, uint8_t value);
+template void Memory::writeRam<uint16_t>(uint32_t address, uint16_t value);
+template void Memory::writeRam<uint32_t>(uint32_t address, uint32_t value);
+template void Memory::writeRam<uint64_t>(uint32_t address, uint64_t value);
+template void Memory::writeRam<int8_t>(uint32_t address, int8_t value);
+template void Memory::writeRam<int16_t>(uint32_t address, int16_t value);
+template void Memory::writeRam<int32_t>(uint32_t address, int32_t value);
+template void Memory::writeRam<int64_t>(uint32_t address, int64_t value);
+template void Memory::writeRam<float>(uint32_t address, float value);
+template void Memory::writeRam<double>(uint32_t address, double value);
 template <typename T> void Memory::writeRam(uint32_t address, T value) {
     uint32_t maxAddress = core->dsiMode ? 0xFFFFFF : 0x3FFFFF;
     if(address > maxAddress) {

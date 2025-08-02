@@ -65,7 +65,7 @@ public:
 
     template <typename T> T read(bool arm7, uint32_t address, bool tcm = true);
     template <typename T> void write(bool arm7, uint32_t address, T value, bool tcm = true);
-
+    
     template <typename T> T readRam(uint32_t address);
     template <typename T> void writeRam(uint32_t address, T value);
 
