@@ -19,6 +19,7 @@
 
 #include <cstring>
 #include "core.h"
+#include <iostream>
 
 // Defines an 8-bit register in an I/O switch statement
 #define DEF_IO_8(addr, func) \
@@ -715,7 +716,7 @@ template <typename T> T Memory::readFallback(bool arm7, uint32_t address) {
     LOG_WARN("Unmapped GBA memory read: 0x%X\n", address);
     if (address == core->interpreter[1].getPC()) return 0;
     return read<T>(arm7, core->interpreter[1].getPC());
-}
+} 
 
 template <typename T> void Memory::writeFallback(bool arm7, uint32_t address, T value) {
     // Align the address
@@ -1891,4 +1892,56 @@ void Memory::writeGbaHaltCnt(uint8_t value) {
     core->interpreter[1].halt(0);
     if (value & BIT(7)) // Stop
         LOG_CRIT("Unhandled request for stop mode\n");
+}
+
+template <typename T> T Memory::readRam(uint32_t address) {
+    uint32_t maxAddress = core->dsiMode ? 0xFFFFFF : 0x3FFFFF;
+    if(address > maxAddress) {
+        address = maxAddress;
+    }
+    
+    T* value_address = reinterpret_cast<T*>(&ram[address]);
+    T value = value_address[0];
+    return value;
+}
+
+template <typename T> void Memory::writeRam(uint32_t address, T value) {
+    uint32_t maxAddress = core->dsiMode ? 0xFFFFFF : 0x3FFFFF;
+    if(address > maxAddress) {
+        address = maxAddress;
+    }
+
+    T* value_address = reinterpret_cast<T*>(&ram[address]);
+    *value_address = value;
+}
+
+void Memory::readMap(uint32_t sAddress, uint32_t eAddress, uint8_t* buffer) {
+    if(eAddress < sAddress) {
+        return;
+    }
+
+    uint32_t maxAddress = core->dsiMode ? 0xFFFFFF : 0x3FFFFF;
+    if(eAddress > maxAddress) {
+        eAddress = maxAddress;
+    }
+
+    if(sAddress > maxAddress) {
+        sAddress = maxAddress;
+    }
+
+    uint32_t size = eAddress - sAddress + 1;
+    memcpy(buffer, &ram[sAddress], size * sizeof(uint8_t));
+}
+
+void Memory::writeMap(uint32_t sAddress, uint32_t size, const uint8_t* buffer) {
+    uint32_t maxAddress = core->dsiMode ? 0xFFFFFF : 0x3FFFFF;
+    if(sAddress > maxAddress || size > maxAddress) {
+        return;
+    }
+
+    if(sAddress + size > maxAddress) {
+        size = maxAddress - sAddress + 1;
+    }
+
+    memcpy(&ram[sAddress], buffer, size * sizeof(uint8_t));
 }
