@@ -718,6 +718,8 @@ template <typename T> T Memory::readFallback(bool arm7, uint32_t address) {
     return read<T>(arm7, core->interpreter[1].getPC());
 } 
 
+// Define the uint8_t explicitly because GCC has a bug in which it removes it with optimization O3
+template void Memory::writeFallback(bool arm7, uint32_t address, uint8_t value);
 template <typename T> void Memory::writeFallback(bool arm7, uint32_t address, T value) {
     // Align the address
     address &= ~(sizeof(T) - 1);
