@@ -42,6 +42,7 @@ public:
     ~Cartridge();
 
     bool setRom(std::string romPath, int romFd = -1, int saveFd = -1, int stateFd = -1, int cheatFd = -1);
+    void setSavePath(std::string path);
     void writeSave();
 
     void trimRom();

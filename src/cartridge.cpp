@@ -88,6 +88,11 @@ void Cartridge::loadRomSection(size_t offset, size_t size) {
     core->dldi.patchRom(rom, offset, size);
 }
 
+void Cartridge::setSavePath(std::string path) {
+    savePath = path;
+    saveDirty = true;
+}
+
 void Cartridge::writeSave() {
     // Update the save file if the data changed
     mutex.lock();
