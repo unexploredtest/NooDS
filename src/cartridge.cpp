@@ -1160,3 +1160,16 @@ void CartridgeGba::sramWrite(uint32_t address, uint8_t value) {
         }
     }
 }
+
+void Cartridge::writeSaveToPath(std::string path, bool alwaysSave) {
+    // Update the save file if the data changed
+    mutex.lock();
+    if (alwaysSave || saveDirty) {
+        FILE *saveFile = fopen(path.c_str(), "wb");
+        fwrite(save, sizeof(uint8_t), saveSize, saveFile);
+        fclose(saveFile);
+
+        saveDirty = false;
+    }
+    mutex.unlock();
+}
