@@ -37,6 +37,7 @@ public:
     void loadState(FILE *file);
 
     uint32_t *getSamples(int count);
+    uint32_t getBufferNumber();
     void runGbaSample();
     void runSample();
     void gbaFifoTimer(int timer);
@@ -83,6 +84,7 @@ private:
 
     uint32_t *bufferIn = nullptr, *bufferOut = nullptr;
     uint32_t bufferSize = 0, bufferPointer = 0;
+    uint32_t bufferNumber = 0;
 
     std::condition_variable cond1, cond2;
     std::mutex mutex1, mutex2;

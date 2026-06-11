@@ -716,6 +716,9 @@ void Spu::pushSample(int16_t sampleLeft, int16_t sampleRight) {
         cond2.notify_one();
     }
 
+    // Increment the buffer number to keep track of new buffers
+    bufferNumber += 1;
+
     // Reset the buffer pointer
     bufferPointer = 0;
 }
@@ -1008,4 +1011,8 @@ uint16_t Spu::readGbaSoundCntX(int channel) {
 uint8_t Spu::readGbaWaveRam(int index) {
     // Read from the currently inactive GBA wave RAM bank
     return gbaWaveRam[!(gbaSoundCntL[1] & BIT(6))][index];
+}
+
+uint32_t Spu::getBufferNumber() {
+    return bufferNumber;
 }
