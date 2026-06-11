@@ -29,7 +29,7 @@
 
 int Settings::directBoot = 1;
 int Settings::romInRam = 0;
-int Settings::fpsLimiter = 1;
+int Settings::fpsLimiter = 0;
 int Settings::frameskip = 0;
 int Settings::threaded2D = 1;
 int Settings::threaded3D = 1;
